@@ -1,2 +1,2 @@
-# Projet-Wirtz_Lothaire_Vincent
+# LuxResto
 Test test
