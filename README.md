@@ -12,6 +12,16 @@ Vous vous apprêtez à explorer le plus beau (et unique...) Grand Duché au mond
 LuxResto est votre meilleur allié pour trouver le restaurant parfait en fonction de vos envies gastronomiques, de vos exigences en matière de qualité et de votre emplacement. Que vous ayez envie de déguster une spécialité locale ou de vous aventurer vers d'autres horizons culinaires, nous avons le plan idéal pour vous.
 
 ## Utilisation
+LuxResto a été élaboré en mettant l'accent sur la facilité d'utilisation.
+Pour lancer l'application, l'utilisateur doit tout d'abord télécharger les fichiers ... et ... dans un même dossier. Ensuite, il suffit d'ouvrir le fichier ... sur Jupyter notebook et de lancer le code.
+Afin d'assurer le fonctionnement du programme, les packages suivantes doivent être téléchargés au préalable:
+```
+pip install pandas
+pip install geopy
+pip install selenium
+pip install ttkthemes
+```
+
 ## Explication du code
 Nous importons d’abord les différentes bibliothèques.
 Les plus importantes étant la bibliothèque tkinter, qui va nous permettre de créer l’interface
