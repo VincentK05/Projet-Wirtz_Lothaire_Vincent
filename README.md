@@ -23,7 +23,79 @@ pip install ttkthemes
 ```
 
 ## Explication du code
-Nous importons d’abord les différentes bibliothèques.
+Le code du programme est divisé en deux parties distinctes : d'une part, le code intitulé "main_project.ipynb" est dédié au "scraping", et d'autre part, le code intitulé "projet_test_appli.ipynb" est chargé de l'interface de l'application.
+\
+**main_project.ipynb**
+\
+Le programme utilise Selenium pour récupérer les données du site resto.lu .
+```
+driver = webdriver.Chrome()
+opts = Options()
+opts.add_argument("user-agent="+random.choice(useragents))
+driver.get("https://www.resto.lu/restaurant/luxembourg-pays")
+```
+Les données concernant le nom des établissements, leur adresse, la note qui leur a été attribuée (sur 10), et les types de cuisine associés au restaurant sont stockées dans la liste *allRestaurants*
+```
+allRestaurants = []
+
+for pagenumber in range(2,106):
+    # the restaurants results are found with the css class .l-grid__item .desktop-four-sixths
+    search_results = driver.find_elements(By.CSS_SELECTOR,".l-grid__item .desktop-four-sixths")
+    
+    print(" Crawling page number " + str(pagenumber-1))
+    for element in search_results:
+        currentRestaurant = {}
+        # Restaurant name can be found using the css selector searchresult-card__title and then by extracting the text in the span element
+        nameElement = element.find_element(By.CSS_SELECTOR,".searchresult-card__title")
+        nameExtracted = nameElement.find_element(By.TAG_NAME,"span").text
+        
+        ## Address and Tags are in the subtitle element
+        subtitle = element.find_element(By.CSS_SELECTOR,".searchresult-card__subtitle")
+        subtitleExtracted = subtitle.find_element(By.TAG_NAME,"div").text
+            
+
+        # The address and tags are split by a special character •. Left is the address, right are the tags if there are any 
+        addresse = subtitleExtracted.split("•")[0]
+        coordinates = getCoordinates(addresse)
+        if "•" in subtitleExtracted:
+            tags = subtitleExtracted.split("•")[1].split(" ")[1:]
+        else:
+            tags = ["N/A"]
+        
+        # Some restaurants have a score but not all -> Try except
+        try:
+            score = element.find_element(By.CSS_SELECTOR,".searchresult-card__score").find_element(By.TAG_NAME,"span").text
+        except:
+            score = -1
+        
+        currentRestaurant["Name"] = nameExtracted
+        currentRestaurant["Tags"] = tags
+        currentRestaurant["Coordinates"] = coordinates
+        currentRestaurant["Addresse"] = addresse
+        currentRestaurant["Rating"] = score
+        # add the current restaurant to all crawled restaurants
+        allRestaurants.append(currentRestaurant)
+```
+Les données sont finalement sauvegardées dans un fichier json.
+```
+with open("allRestos.json", "w",encoding='utf8') as final:
+   json.dump(allRestaurants, final, ensure_ascii=False)
+```
+La fonction GetCoordinates se repose sur un service de géolocalisation nommé *Nominatim* pour convertir une adresse donnée en ses coordonnées. Ceci permet au programme de calculer la distance entre les coordonnées des restaurants et celles des adresses introduites par les utilisateurs de LuxResto.
+```
+def getCoordinates(address):
+    try:
+        geolocator = Nominatim(user_agent="Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.1; WOW64; Trident/6.0)")
+        loc = geolocator.geocode(address)
+        coordinates = (loc.latitude,loc.longitude)
+    except:
+        coordinates = (0,0)
+    return coordinates
+```
+\
+**projet_test_appli.ipynb**
+\
+A présent, penchons nous sur le code de l'interface. Tout d'abord nous importons les différentes bibliothèques.
 Les plus importantes étant la bibliothèque tkinter, qui va nous permettre de créer l’interface
 graphique, pandas qui va nous permettre de manipuler les données, geopy.distance qui va nous
 permettre de calculer la distance géographique entre l’adresse indiquée dans l’application et les
