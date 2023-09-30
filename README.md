@@ -169,6 +169,7 @@ root.title("LuxResto")
 
 
 - Passer à la page suivante:
+  \
   Dans le site scrapé, resto.lu, un paramètre de randomisation, 'randomseed', est présent dans l'url de chaque page, ce qui introduit un élément aléatoire dans chaque requête. Ainsi, il n'était pas possible d'indiquer au programme de tout simplement changer l'url en modifiant le numéro de la page actuelle pour accéder à la page suivante et recupérer les données souhaitées. Nous avons ainsi du ajouter une ligne de code permettant d'intéragir avec du code JavaScript, pour indiquer au programme de défiler le long de la page sur laquelle il se trouve, jusqu'à ce qu'il trouve le bouton 'next page' et d'appuyer sur ce bouton, imitant ainsi le comportemnt d'un utilisateur humain sur le site.
   
   ```
