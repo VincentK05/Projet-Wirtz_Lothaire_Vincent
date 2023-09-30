@@ -14,5 +14,7 @@ LuxResto est votre meilleur allié pour trouver le restaurant parfait en fonctio
 ## Utilisation
 ## Explication du code
 ## Principales difficultées
+- Trouver le site à scraper pour récupérer les données
+  Tous les sites ne permettent pas le scrapage sans difficultées. Certaines pages web ont des systèmes de sécurité en place qui 'bloquent' les utilisateur qui tentent de les scraper. Ainsi, le site Resto.lu n'a pas été le pre
 ## Développement
 
