@@ -25,7 +25,7 @@ pip install ttkthemes
 ## Explication du code
 Le code du programme est divisé en deux parties distinctes : d'une part, le code intitulé "main_project.ipynb" est dédié au "scraping", et d'autre part, le code intitulé "projet_test_appli.ipynb" est chargé de l'interface de l'application.
 \
-**main_project.ipynb**
+- **main_project.ipynb**
 \
 Le programme utilise Selenium pour récupérer les données du site resto.lu .
 ```
@@ -93,7 +93,7 @@ def getCoordinates(address):
     return coordinates
 ```
 \
-**projet_test_appli.ipynb**
+- **projet_test_appli.ipynb**
 \
 A présent, penchons nous sur le code de l'interface. Tout d'abord nous importons les différentes bibliothèques.
 Les plus importantes étant la bibliothèque tkinter, qui va nous permettre de créer l’interface
