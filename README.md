@@ -103,4 +103,6 @@ root.title("LuxResto")
   driver.find_element(By.CSS_SELECTOR,".cwb-page-"+str(pagenumber)).click()
   ```
 ## Développement
-
+LuxResto a été développé sur Python 3.10.9 avec les version des différents packages installés suivants:
+- Selenium version: 4.12.0
+- Pandas version: 1.5.3
