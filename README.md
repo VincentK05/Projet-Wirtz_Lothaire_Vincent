@@ -13,7 +13,7 @@ LuxResto est votre meilleur allié pour trouver le restaurant parfait en fonctio
 
 ## Utilisation
 LuxResto a été élaboré en mettant l'accent sur la facilité d'utilisation.
-Pour lancer l'application, l'utilisateur doit tout d'abord télécharger les fichiers ... et ... dans un même dossier. Ensuite, il suffit d'ouvrir le fichier ... sur Jupyter notebook et de lancer le code.
+Pour lancer l'application, l'utilisateur doit tout d'abord télécharger les fichiers *allRestos.json* et ... dans un même dossier. Ensuite, il suffit d'ouvrir le fichier ... sur Jupyter notebook et de lancer le code.
 Afin d'assurer le fonctionnement du programme, les packages suivantes doivent être téléchargés au préalable:
 ```
 pip install pandas
