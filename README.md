@@ -13,6 +13,70 @@ LuxResto est votre meilleur allié pour trouver le restaurant parfait en fonctio
 
 ## Utilisation
 ## Explication du code
+Nous importons d’abord les différentes bibliothèques.
+Les plus importantes étant la bibliothèque tkinter, qui va nous permettre de créer l’interface
+graphique, pandas qui va nous permettre de manipuler les données, geopy.distance qui va nous
+permettre de calculer la distance géographique entre l’adresse indiquée dans l’application et les
+différents restaurants.
+```
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import ttk
+from ttkthemes import ThemedStyle
+import pandas as pd
+import geopy
+from tkinter import ttk
+import json
+import time
+import selenium
+from selenium import webdriver
+import random
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, WebDriverException
+import geopy.distance
+from geopy.geocoders import Nominatim
+```
+Nous créons ensuite une fonction appelée load_data, qui va nous permettre de charger les données
+depuis le fichier allRestos.json où nous avons enregistré les données de tous les restaurants
+luxembourgeois, d’effectuer un filtrage sur les données en fonction du type de cuisine sélectionné et
+de la notation minimale sélectionnée, et d’ensuite afficher les résultats dans une interface graphique.
+```
+def load_data():
+    # Open a file dialog to select the JSON file
+    print(address_entry.get())
+    address = address_entry.get()
+    coordinates = getCoordinates(address)
+    df = pd.read_json("./allRestos.json")
+```
+Pour le filtrage des données, nous enlevons tous les caractères inutiles de la variable « Tags » qui
+donne le type de cuisine, comme les guillemets, pour n’avoir que le texte et que cela corresponde
+aux choix de type de cuisine proposés dans l’application. On convertit la variable Rating en
+numérique, pour pouvoir proposer une note minimale dans l’application.
+```
+df["Tags"] = df["Tags"].astype(str)
+    df["Tags"] = df.apply(lambda row: row.Tags.replace("[",""), axis=1)
+    df["Tags"] = df.apply(lambda row: row.Tags.replace("]",""), axis=1)
+    df["Tags"] = df.apply(lambda row: row.Tags.replace("'"," "), axis=1)
+    df["Tags"] = df.apply(lambda row: row.Tags.replace(","," "), axis=1)
+    df.Rating = pd.to_numeric(df.Rating, errors='coerce')
+    dataset = df
+    selected_cuisine = cuisine_var.get()
+    selected_rating = rating_var.get()
+```
+La ligne « filtered_df » va nous permettre de ne sortir dans l’application que les résultats
+correspondant au type de cuisine sélectionné et supérieur ou égal à la note minimale sélectionnée.
+```
+filtered_df = dataset[(dataset["Tags"].str.contains(selected_cuisine)) & (dataset["Rating"]>int(selected_rating))]
+```
+On crée ensuite l’interface graphique avec tk.Tk() de la bibliothèque tkInter.
+```
+root = tk.Tk()
+root.title("LuxResto")
+```
+
 ## Principales difficultées
 - Trouver le site à scraper pour récupérer les données:
   \
